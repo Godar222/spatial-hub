@@ -1,13 +1,23 @@
 {
   "schema": 1,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "requirements_version": "2",
   "requirements_sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff",
   "files": [
     {
       "path": "main.py",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/main.py",
-      "sha256": "86f27549cf58a1fec0cc5ce5a94900fd177ae4fb872d134203f1b5f79d871188"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/v041.py",
+      "sha256": "68884b3fa47bb770c67b82f23a3a656da324d48cd41a88d06f4c6384ac7a6ec4"
+    },
+    {
+      "path": "dashboard.html",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/dashboard_v041.html",
+      "sha256": "9368da65ee71d45cc8dfd0434ab5412c62b7dc02a35bfa6197577eaa1bb16a51"
+    },
+    {
+      "path": "phone.html",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/phone_v041.html",
+      "sha256": "c75a82157445e5e9daaac5ed72cc7cff874ee110241c6fbd7f38a0ac8762459f"
     },
     {
       "path": "requirements.txt",
@@ -15,5 +25,5 @@
       "sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff"
     }
   ],
-  "notes": "Desktop v0.4.0: embedded Windows app window, automatic LAN/Wi-Fi/BLE discovery, rough radio-distance estimates, tray operation and phone-agent support."
+  "notes": "v0.4.1 hotfix: robust Windows LAN/Wi-Fi/BLE discovery, connected-Wi-Fi fallback, visible scan diagnostics, restored phone pairing."
 }
