@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spatial Hub</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#070709;--bg2:#0d0d10;--glass:rgba(28,28,30,.72);--glass2:rgba(44,44,46,.58);
+  --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.16);--text:#f5f5f7;--muted:#98989f;
+  --blue:#0a84ff;--cyan:#64d2ff;--green:#30d158;--purple:#bf5af2;--orange:#ff9f0a;--red:#ff453a;
+  --shadow:0 22px 60px rgba(0,0,0,.36);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+button,input{font:inherit}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 35% 20%,rgba(10,132,255,.14),transparent 33%),radial-gradient(circle at 72% 70%,rgba(191,90,242,.09),transparent 28%),linear-gradient(180deg,#0a0a0d,#060608);pointer-events:none}
+.shell{position:relative;display:grid;grid-template-rows:64px 1fr;width:100%;height:100%}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(13,13,16,.72);backdrop-filter:blur(28px) saturate(140%);-webkit-backdrop-filter:blur(28px) saturate(140%)}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#22232a,#101114);border:1px solid var(--line2);box-shadow:inset 0 1px rgba(255,255,255,.08);position:relative}.logo:before,.logo:after{content:"";position:absolute;border-radius:50%}.logo:before{inset:7px;border:2px solid var(--cyan);opacity:.9}.logo:after{width:7px;height:7px;background:white;left:13px;top:13px;box-shadow:0 0 14px var(--cyan)}
+.brand h1{font-size:16px;letter-spacing:-.02em;margin:0;font-weight:650}.subtitle{color:var(--muted);font-size:11px;margin-top:1px}.topactions{display:flex;align-items:center;gap:8px}.btn{border:1px solid var(--line2);background:rgba(255,255,255,.07);color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer;transition:.16s ease}.btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}.btn.primary{background:var(--blue);border-color:transparent}.btn.primary:hover{background:#2490ff}.statusdot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(48,209,88,.6)}.version{font-weight:650;color:#c7c7cc}
+.main{display:grid;grid-template-columns:230px minmax(0,1fr) 360px;min-height:0}.sidebar,.inspector{background:rgba(15,15,18,.66);backdrop-filter:blur(24px) saturate(130%);-webkit-backdrop-filter:blur(24px) saturate(130%);overflow:auto}.sidebar{border-right:1px solid var(--line);padding:14px 12px}.inspector{border-left:1px solid var(--line);padding:14px}.sectionTitle{font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:#777780;margin:12px 8px 6px}.navbtn{width:100%;display:flex;align-items:center;justify-content:space-between;border:0;background:transparent;color:#d1d1d6;padding:9px 10px;border-radius:9px;cursor:pointer;text-align:left}.navbtn:hover{background:rgba(255,255,255,.06)}.navbtn.active{background:rgba(10,132,255,.18);color:white}.badge{min-width:24px;text-align:center;background:rgba(255,255,255,.08);border:1px solid var(--line);padding:1px 6px;border-radius:999px;color:#b6b6bd;font-size:10px}.layer{display:flex;align-items:center;justify-content:space-between;padding:7px 8px;color:#c7c7cc}.switch{appearance:none;width:31px;height:18px;border-radius:999px;background:#35353a;position:relative;cursor:pointer;transition:.2s}.switch:after{content:"";width:14px;height:14px;background:white;border-radius:50%;position:absolute;left:2px;top:2px;transition:.2s}.switch:checked{background:var(--green)}.switch:checked:after{left:15px}.search{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.06);color:white;border-radius:10px;padding:8px 10px;outline:none}.search:focus{border-color:rgba(10,132,255,.7);box-shadow:0 0 0 3px rgba(10,132,255,.14)}
+.center{position:relative;min-width:0;min-height:0;overflow:hidden}canvas{width:100%;height:100%;display:block;cursor:grab}.center.drag canvas{cursor:grabbing}.hud{position:absolute;left:14px;top:14px;display:flex;gap:7px;flex-wrap:wrap;pointer-events:none}.chip{pointer-events:auto;background:rgba(28,28,30,.68);border:1px solid var(--line);backdrop-filter:blur(18px);padding:6px 9px;border-radius:999px;color:#c7c7cc;font-size:11px;box-shadow:0 8px 20px rgba(0,0,0,.18)}.viewcontrols{position:absolute;right:14px;top:14px;display:flex;gap:6px;background:rgba(28,28,30,.72);border:1px solid var(--line);border-radius:12px;padding:4px;backdrop-filter:blur(18px)}.seg{border:0;background:transparent;color:#a1a1a6;padding:6px 9px;border-radius:8px;cursor:pointer;font-size:11px}.seg.active,.seg:hover{background:rgba(255,255,255,.09);color:white}.legend{position:absolute;left:14px;bottom:14px;background:rgba(28,28,30,.70);border:1px solid var(--line);border-radius:13px;padding:9px 11px;backdrop-filter:blur(18px);font-size:10px;color:#a7a7ad}.lg{display:inline-flex;align-items:center;margin-right:9px}.dot{width:7px;height:7px;border-radius:50%;margin-right:5px}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:10px;box-shadow:0 1px rgba(255,255,255,.03),var(--shadow);backdrop-filter:blur(24px)}.card h3{font-size:12px;margin:0 0 9px;font-weight:650;letter-spacing:-.01em}.muted{color:var(--muted);font-size:11px}.big{font-size:19px;font-weight:680;letter-spacing:-.03em}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.metric{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:11px;padding:9px 7px}.metric b{display:block;font-size:16px}.metric span{color:var(--muted);font-size:9px}.path{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.pathNode{padding:4px 7px;border-radius:8px;background:rgba(255,255,255,.055);border:1px solid var(--line);font-size:10px}.arrow{color:#666}.list{display:flex;flex-direction:column;gap:5px}.item{width:100%;border:1px solid transparent;background:transparent;color:white;border-radius:11px;padding:8px 9px;display:flex;align-items:center;gap:9px;cursor:pointer;text-align:left}.item:hover{background:rgba(255,255,255,.055);border-color:var(--line)}.item.active{background:rgba(10,132,255,.13);border-color:rgba(10,132,255,.34)}.ico{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:13px;flex:0 0 auto}.grow{flex:1;min-width:0}.name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sub{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kv{width:100%;border-collapse:collapse;font-size:11px}.kv td{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.055);vertical-align:top}.kv td:first-child{color:#83838b;width:42%;padding-right:7px}.pill{display:inline-block;padding:2px 6px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-size:9px;margin:2px 3px 0 0;color:#c7c7cc}.cap{display:flex;gap:5px;flex-wrap:wrap}.actionrow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}.smallbtn{border:1px solid var(--line);background:rgba(255,255,255,.055);color:white;border-radius:9px;padding:7px 6px;cursor:pointer;font-size:10px}.smallbtn:hover{background:rgba(255,255,255,.1)}.smallbtn:disabled{opacity:.35;cursor:not-allowed}.service{padding:7px 0;border-bottom:1px solid rgba(255,255,255,.055);font-size:10px}.service:last-child{border-bottom:0}.err{padding:7px 8px;border-radius:9px;background:rgba(255,159,10,.10);border:1px solid rgba(255,159,10,.24);color:#ffd18b;margin-top:5px;font-size:10px}.timeline{max-height:200px;overflow:auto}.evt{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px;color:#c3c3c8}.evt time{color:#74747c;margin-right:6px}.spark{width:100%;height:64px;border-radius:9px;background:rgba(255,255,255,.025);border:1px solid var(--line);margin-top:8px}.phonebox{display:grid;grid-template-columns:94px 1fr;gap:10px;align-items:center}.phonebox img{width:94px;height:94px;background:white;padding:5px;border-radius:12px}.url{word-break:break-all;font-size:9px;color:#777780}.toast{position:absolute;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:rgba(35,35,38,.9);border:1px solid var(--line2);padding:9px 13px;border-radius:11px;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);font-size:11px}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1180px){.main{grid-template-columns:190px minmax(0,1fr) 320px}.grid4{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand"><div class="logo"></div><div><h1>Spatial Hub</h1><div class="subtitle">Spatial intelligence · local network map</div></div></div>
+  <div class="topactions"><span class="statusdot"></span><span id="status" class="muted">starting…</span><button class="btn" id="snapshot">Snapshot</button><button class="btn primary" id="scan">Scan now</button><span class="version" id="ver">v—</span></div>
+</header>
+<div class="main">
+  <aside class="sidebar">
+    <input class="search" id="search" placeholder="Search devices">
+    <div class="sectionTitle">Views</div>
+    <button class="navbtn active" data-view="all"><span>Overview</span><span class="badge" id="allCount">0</span></button>
+    <button class="navbtn" data-view="lan"><span>LAN</span><span class="badge" id="lanCount">0</span></button>
+    <button class="navbtn" data-view="wifi"><span>Wi‑Fi</span><span class="badge" id="wifiCount">0</span></button>
+    <button class="navbtn" data-view="ble"><span>Bluetooth</span><span class="badge" id="bleCount">0</span></button>
+    <button class="navbtn" data-view="agent"><span>Phone agents</span><span class="badge" id="agentCount">0</span></button>
+
+    <div class="sectionTitle">Layers</div>
+    <label class="layer"><span>Links</span><input class="switch" type="checkbox" id="layerLinks" checked></label>
+    <label class="layer"><span>Uncertainty</span><input class="switch" type="checkbox" id="layerUncertainty" checked></label>
+    <label class="layer"><span>Wi‑Fi</span><input class="switch" type="checkbox" id="layerWifi" checked></label>
+    <label class="layer"><span>Bluetooth</span><input class="switch" type="checkbox" id="layerBle" checked></label>
+    <label class="layer"><span>LAN</span><input class="switch" type="checkbox" id="layerLan" checked></label>
+    <label class="layer"><span>Offline</span><input class="switch" type="checkbox" id="layerOffline" checked></label>
+
+    <div class="sectionTitle">Discovered</div>
+    <div class="list" id="deviceList"></div>
+  </aside>
+
+  <main class="center" id="center">
+    <canvas id="c"></canvas>
+    <div class="hud">
+      <span class="chip" id="envChip">Network —</span>
+      <span class="chip" id="scanChip">Waiting</span>
+      <span class="chip">L-drag rotate · R-drag pan · wheel zoom · Q/E roll</span>
+    </div>
+    <div class="viewcontrols">
+      <button class="seg active" data-camera="free">Free</button>
+      <button class="seg" data-camera="top">Top</button>
+      <button class="seg" data-camera="reset">Reset</button>
+      <button class="seg" data-camera="focus">Focus</button>
+    </div>
+    <div class="legend">
+      <span class="lg"><i class="dot" style="background:#f5f5f7"></i>Hub</span>
+      <span class="lg"><i class="dot" style="background:#0a84ff"></i>Wi‑Fi</span>
+      <span class="lg"><i class="dot" style="background:#30d158"></i>LAN</span>
+      <span class="lg"><i class="dot" style="background:#bf5af2"></i>BLE</span>
+      <span class="lg"><i class="dot" style="background:#ff9f0a"></i>Agent</span>
+      <span class="lg"><i class="dot" style="background:#64d2ff"></i>Internet</span>
+    </div>
+    <div class="toast" id="toast"></div>
+  </main>
+
+  <aside class="inspector">
+    <div class="card">
+      <h3>Network topology</h3>
+      <div class="grid4">
+        <div class="metric"><b id="mLan">0</b><span>LAN</span></div>
+        <div class="metric"><b id="mWifi">0</b><span>Wi‑Fi AP</span></div>
+        <div class="metric"><b id="mBle">0</b><span>BLE</span></div>
+        <div class="metric"><b id="mSvc">0</b><span>Services</span></div>
+      </div>
+      <div class="path" id="path" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" id="phoneCard">
+      <h3>Connect iPhone</h3>
+      <div class="phonebox"><img id="qr"><div><div class="big" id="code">—</div><div class="muted">Pairing code</div><div class="url" id="url"></div></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Selected device</h3>
+      <div id="detail" class="muted">Select a node on the map or in the device list.</div>
+      <canvas class="spark" id="spark"></canvas>
+    </div>
+
+    <div class="card">
+      <h3>Advertised services</h3>
+      <div id="services" class="muted">Select a LAN device.</div>
+    </div>
+
+    <div class="card">
+      <h3>Diagnostics</h3>
+      <div id="errors" class="muted">No errors</div>
+    </div>
+
+    <div class="card">
+      <h3>Recent activity</h3>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </aside>
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id), c=$('c'), g=c.getContext('2d'), center=$('center');
+const spark=$('spark'), sg=spark.getContext('2d');
+const E=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+let S={nodes:[],links:[],scan:{lan:[],wifi:[],ble:[],services:[],errors:[]},agents:[],environment:{},events:[],view:'all',search:'',selected:null,projected:[],drag:null,lastX:0,lastY:0,downX:0,downY:0,cam:{yaw:-.72,pitch:.30,roll:0,zoom:1,panX:0,panY:0,target:null},layers:{links:true,uncertainty:true,wifi:true,ble:true,lan:true,offline:true}};
+const colors={hub:'#f5f5f7',wifi:'#0a84ff',lan:'#30d158',ble:'#bf5af2',agent:'#ff9f0a',internet:'#64d2ff'};
+const icons={router:'◉','access-point':'⌁',media:'▣',printer:'▤',phone:'▯',computer:'⌘',storage:'▥','smart-home':'⌂',unknown:'•',internet:'∞'};
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),1800)}
+function resize(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);g.setTransform(d,0,0,d,0,0);const sr=spark.getBoundingClientRect();spark.width=Math.max(10,Math.round(sr.width*d));spark.height=Math.max(10,Math.round(sr.height*d));sg.setTransform(d,0,0,d,0,0);draw();drawSpark([])}
+addEventListener('resize',resize);
+function rot(p){let x=(p.x||0),y=(p.y||0),z=(p.z||0);let cy=Math.cos(S.cam.yaw),sy=Math.sin(S.cam.yaw);let x1=x*cy-z*sy,z1=x*sy+z*cy;let cp=Math.cos(S.cam.pitch),sp=Math.sin(S.cam.pitch);let y2=y*cp-z1*sp,z2=y*sp+z1*cp;let cr=Math.cos(S.cam.roll),sr=Math.sin(S.cam.roll);return {x:x1*cr-y2*sr,y:x1*sr+y2*cr,z:z2}}
+function tr(p){let q=rot(p),depth=11+q.z;let base=Math.min(c.clientWidth/15,c.clientHeight/10.5)*S.cam.zoom;let sc=base*(11/Math.max(4.5,depth));return{x:c.clientWidth/2+S.cam.panX+q.x*sc,y:c.clientHeight*.54+S.cam.panY-q.y*sc,sc,depth}}
+function visibleNode(n){if(!S.layers.offline&&n.online===false)return false;if(n.kind==='wifi'&&!S.layers.wifi)return false;if(n.kind==='ble'&&!S.layers.ble)return false;if(n.kind==='lan'&&!S.layers.lan)return false;return true}
+function edgeStyle(l){if(l.status==='confirmed')return{color:'rgba(255,255,255,.30)',dash:[],w:1.3};if(l.status==='observed')return{color:'rgba(100,210,255,.25)',dash:[3,5],w:1};return{color:'rgba(255,159,10,.24)',dash:[7,5],w:1}}
+function drawGrid(){g.save();g.lineWidth=1;for(let i=-7;i<=7;i++){line3({x:i,y:-1.7,z:-7},{x:i,y:-1.7,z:7},'rgba(255,255,255,.035)');line3({x:-7,y:-1.7,z:i},{x:7,y:-1.7,z:i},'rgba(255,255,255,.035)')}g.restore()}
+function line3(a,b,color,dash=[]){a=tr(a);b=tr(b);g.strokeStyle=color;g.setLineDash(dash);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke();g.setLineDash([])}
+function draw(){g.clearRect(0,0,c.clientWidth,c.clientHeight);drawGrid();S.projected=[];const map=new Map(S.nodes.map(n=>[n.id,n]));if(S.layers.links){for(const l of S.links){const a=map.get(l.a),b=map.get(l.b);if(!a||!b||!visibleNode(a)||!visibleNode(b))continue;const st=edgeStyle(l);g.lineWidth=st.w;line3(a.position||{},b.position||{},st.color,st.dash)}}const arr=S.nodes.filter(visibleNode).slice().sort((a,b)=>tr(b.position||{}).depth-tr(a.position||{}).depth);for(const n of arr){const p=tr(n.position||{}),base=n.kind==='hub'?10:n.kind==='internet'?9:7;const unc=(n.position||{}).uncertainty||0;if(S.layers.uncertainty&&unc>.3&&n.kind!=='internet'){const rr=Math.max(10,Math.min(85,unc*p.sc*.32));g.fillStyle=(colors[n.kind]||'#8e8e93')+'12';g.strokeStyle=(colors[n.kind]||'#8e8e93')+'3d';g.beginPath();g.arc(p.x,p.y,rr,0,Math.PI*2);g.fill();g.stroke()}g.shadowColor=colors[n.kind]||'#aaa';g.shadowBlur=S.selected===n.id?18:7;g.fillStyle=n.online===false?'#55555b':(colors[n.kind]||'#8e8e93');g.beginPath();g.arc(p.x,p.y,base,0,Math.PI*2);g.fill();g.shadowBlur=0;if(S.selected===n.id){g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(p.x,p.y,base+5,0,Math.PI*2);g.stroke()}g.fillStyle='#e5e5ea';g.font='11px -apple-system,Segoe UI,sans-serif';g.fillText((n.name||n.kind).slice(0,24),p.x+base+6,p.y+4);S.projected.push({n,p,r:base})}}
+function typeIcon(n){return icons[n.device_type]||icons[n.kind]||'•'}
+function filteredNodes(){let a=S.nodes.filter(n=>n.kind!=='hub'&&n.kind!=='internet'&&visibleNode(n));if(S.view!=='all')a=a.filter(n=>n.kind===S.view);const q=S.search.trim().toLowerCase();if(q)a=a.filter(n=>[n.name,n.ip,n.address,n.ssid,n.hostname,n.device_type].some(x=>String(x||'').toLowerCase().includes(q)));return a.sort((a,b)=>(a.kind+a.name).localeCompare(b.kind+b.name))}
+function renderList(){const box=$('deviceList');box.innerHTML='';for(const n of filteredNodes()){const b=document.createElement('button');b.className='item'+(S.selected===n.id?' active':'');const sig=n.signal!=null?`${n.signal}%`:n.rssi!=null?`${n.rssi} dBm`:n.ip||n.address||n.connection||'';b.innerHTML=`<span class="ico">${E(typeIcon(n))}</span><span class="grow"><span class="name">${E(n.name||n.kind)}</span><span class="sub">${E(n.device_type||n.kind)} · ${E(sig)}</span></span>`;b.onclick=()=>select(n.id);box.appendChild(b)}}
+function networkPath(){const env=S.environment||{},path=[];path.push('Laptop');const ap=S.scan.wifi.find(x=>x.connected);if(ap)path.push(ap.name||'Wi‑Fi AP');const gw=S.scan.lan.find(x=>x.gateway);if(gw)path.push('Gateway');if(env.gateway)path.push(env.internet_reachable?'Internet ✓':'Internet ?');$('path').innerHTML=path.map((x,i)=>`${i?'<span class="arrow">›</span>':''}<span class="pathNode">${E(x)}</span>`).join('')}
+function capHtml(n){return(n.capabilities||[]).map(x=>`<span class="pill">${E(x)}</span>`).join('')||'<span class="muted">No advertised capabilities</span>'}
+async function select(id){S.selected=id;renderList();draw();const n=S.nodes.find(x=>x.id===id);if(!n)return;const d=n.distance||{},tel=n.telemetry||{},sens=n.sensors||{};const dist=d.available?`≈ ${d.approx_m} m`:'not measured';$('detail').innerHTML=`<div class="big" style="font-size:16px">${E(n.name||n.kind)}</div><div class="cap" style="margin:5px 0">${capHtml(n)}</div><table class="kv"><tr><td>Type</td><td>${E(n.device_type||n.kind)}</td></tr><tr><td>Status</td><td>${n.online===false?'offline':'online'}</td></tr>${n.ip?`<tr><td>IP</td><td>${E(n.ip)}</td></tr>`:''}${n.address?`<tr><td>Address</td><td>${E(n.address)}</td></tr>`:''}${n.ssid?`<tr><td>SSID</td><td>${E(n.ssid)}</td></tr>`:''}${n.signal!=null?`<tr><td>Wi‑Fi signal</td><td>${n.signal}% · RSSI≈${E(n.rssi)} dBm</td></tr>`:''}${n.rssi!=null&&n.kind==='ble'?`<tr><td>BLE RSSI</td><td>${E(n.rssi)} dBm</td></tr>`:''}<tr><td>Distance</td><td>${E(dist)}</td></tr>${tel.cpu!=null?`<tr><td>CPU</td><td>${E(tel.cpu)}%</td></tr>`:''}${tel.ram!=null?`<tr><td>RAM</td><td>${E(tel.ram)}%</td></tr>`:''}${sens.latency_ms!=null?`<tr><td>Agent latency</td><td>${Math.round(sens.latency_ms)} ms</td></tr>`:''}</table><div class="actionrow"><button class="smallbtn" onclick="actPing('${E(n.id)}')" ${n.ip?'':'disabled'}>Ping</button><button class="smallbtn" onclick="actWol('${E(n.id)}')" ${(n.kind==='lan'&&n.address)?'':'disabled'}>Wake</button><button class="smallbtn" onclick="actWeb('${E(n.id)}')" ${n.ip?'':'disabled'}>Web UI</button></div><div class="muted" style="margin-top:8px">${E(d.note||'')}</div>`;renderServices(n);try{const h=await(await fetch('/api/history?id='+encodeURIComponent(id))).json();drawSpark(h.samples||[])}catch(e){drawSpark([])}}
+function renderServices(n){const a=n.services||[];$('services').innerHTML=a.length?a.map(s=>`<div class="service"><b>${E(s.name||s.type||s.source)}</b><div class="muted">${E(s.source)} · ${E(s.type||'')} ${s.port?'· port '+s.port:''}</div></div>`).join(''):'<span class="muted">No mDNS/SSDP service advertised for this device.</span>'}
+function drawSpark(samples){const w=spark.clientWidth,h=spark.clientHeight;sg.clearRect(0,0,w,h);if(!samples||samples.length<2){sg.fillStyle='#777780';sg.font='10px system-ui';sg.fillText('No signal history yet',9,20);return}const vals=samples.map(x=>x.rssi??x.signal??x.latency).filter(x=>x!=null).map(Number);if(vals.length<2)return;let mn=Math.min(...vals),mx=Math.max(...vals);if(mx===mn)mx=mn+1;sg.strokeStyle='#64d2ff';sg.lineWidth=1.6;sg.beginPath();vals.forEach((v,i)=>{let x=7+i/(vals.length-1)*(w-14),y=7+(1-(v-mn)/(mx-mn))*(h-14);i?sg.lineTo(x,y):sg.moveTo(x,y)});sg.stroke()}
+async function actPing(id){try{const r=await(await fetch('/api/action/ping',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})})).json();toast(r.error||(`Ping ${r.ok?'OK':'failed'} · ${r.ms} ms`))}catch(e){toast('Ping failed')}}
+async function actWol(id){try{const r=await(await fetch('/api/action/wol',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})})).json();toast(r.error||'Wake-on-LAN sent')}catch(e){toast('Wake failed')}}
+async function actWeb(id){try{const r=await(await fetch('/api/action/open-web',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})})).json();toast(r.error||'Opening device web UI')}catch(e){toast('Open failed')}}
+function counts(){$('lanCount').textContent=$('mLan').textContent=S.scan.lan.length;$('wifiCount').textContent=$('mWifi').textContent=S.scan.wifi.length;$('bleCount').textContent=$('mBle').textContent=S.scan.ble.length;$('agentCount').textContent=S.agents.length;$('allCount').textContent=S.nodes.filter(n=>!['hub','internet'].includes(n.kind)).length;$('mSvc').textContent=S.scan.services.length}
+function renderErrors(){$('errors').innerHTML=S.scan.errors.length?S.scan.errors.map(x=>`<div class="err">${E(x)}</div>`).join(''):'<span class="muted">No discovery errors.</span>'}
+function renderEvents(){$('timeline').innerHTML=(S.events||[]).slice(0,50).map(e=>`<div class="evt"><time>${new Date(e.t*1000).toLocaleTimeString()}</time>${E(e.text)}</div>`).join('')||'<span class="muted">No events yet.</span>'}
+function renderEnv(){const e=S.environment||{};$('envChip').textContent=e.connected_ssid?`${e.connected_ssid} · ${e.host_ip||''}`:(e.host_ip||'Network');$('scanChip').textContent=S.scan.running?'Scanning…':S.scan.last_scan?`Scanned ${new Date(S.scan.last_scan*1000).toLocaleTimeString()} · ${S.scan.duration_ms||0} ms`:'Waiting';networkPath()}
+async function info(){try{const s=await(await fetch('/api/info')).json();$('qr').src=s.qr;$('code').textContent=s.code;$('url').textContent=s.url}catch(e){}}
+async function poll(){try{const s=await(await fetch('/api/state')).json();S.nodes=s.nodes||[];S.links=s.links||[];S.scan=s.scan||S.scan;S.agents=s.agents||[];S.environment=s.environment||{};S.events=s.events||[];$('ver').textContent='v'+s.version;$('status').textContent=S.scan.running?'scanning':'live';counts();renderEnv();renderErrors();renderEvents();renderList();if(S.selected&&!S.nodes.some(n=>n.id===S.selected))S.selected=null;draw()}catch(e){$('status').textContent='API error'}}
+$('scan').onclick=()=>fetch('/api/scan',{method:'POST'});$('snapshot').onclick=async()=>{try{let r=await(await fetch('/api/snapshot',{method:'POST'})).json();toast(r.ok?'Snapshot saved':r.error)}catch(e){toast('Snapshot failed')}};$('search').oninput=e=>{S.search=e.target.value;renderList()};
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.view=b.dataset.view;renderList()});
+[['layerLinks','links'],['layerUncertainty','uncertainty'],['layerWifi','wifi'],['layerBle','ble'],['layerLan','lan'],['layerOffline','offline']].forEach(([id,k])=>$(id).onchange=e=>{S.layers[k]=e.target.checked;draw();renderList()});
+document.querySelectorAll('[data-camera]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-camera]').forEach(x=>x.classList.remove('active'));b.classList.add('active');let m=b.dataset.camera;if(m==='top'){S.cam.pitch=-1.52;S.cam.yaw=0;S.cam.roll=0;S.cam.panX=S.cam.panY=0}else if(m==='reset'){S.cam={yaw:-.72,pitch:.30,roll:0,zoom:1,panX:0,panY:0,target:null}}else if(m==='focus'&&S.selected){const n=S.nodes.find(x=>x.id===S.selected);if(n){const p=tr(n.position||{});S.cam.panX+=c.clientWidth/2-p.x;S.cam.panY+=c.clientHeight*.54-p.y}}draw()});
+c.oncontextmenu=e=>e.preventDefault();c.onpointerdown=e=>{S.drag=e.button===2?'pan':'rotate';S.lastX=S.downX=e.clientX;S.lastY=S.downY=e.clientY;center.classList.add('drag');try{c.setPointerCapture(e.pointerId)}catch(_){}};c.onpointermove=e=>{if(!S.drag)return;let dx=e.clientX-S.lastX,dy=e.clientY-S.lastY;if(S.drag==='rotate'){S.cam.yaw+=dx*.008;S.cam.pitch=Math.max(-1.52,Math.min(1.52,S.cam.pitch+dy*.008))}else{S.cam.panX+=dx;S.cam.panY+=dy}S.lastX=e.clientX;S.lastY=e.clientY;draw()};c.onpointerup=e=>{S.drag=null;center.classList.remove('drag')};c.onclick=e=>{if(Math.hypot(e.clientX-S.downX,e.clientY-S.downY)>6)return;const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;let best=null,bd=999;for(const q of S.projected){const d=Math.hypot(x-q.p.x,y-q.p.y);if(d<q.r+9&&d<bd){best=q.n;bd=d}}if(best)select(best.id)};c.onwheel=e=>{e.preventDefault();S.cam.zoom=Math.max(.45,Math.min(2.4,S.cam.zoom*(e.deltaY>0?.9:1.1)));draw()};
+addEventListener('keydown',e=>{if(e.key.toLowerCase()==='q'){S.cam.roll-=.06;draw()}if(e.key.toLowerCase()==='e'){S.cam.roll+=.06;draw()}});
+setInterval(poll,1400);info();poll();resize();
+</script>
+</body>
+</html>
