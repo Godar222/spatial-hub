@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "requirements_version": "3",
   "requirements_sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48",
   "files": [
@@ -25,5 +25,5 @@
       "sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48"
     }
   ],
-  "notes": "v0.5.0: Apple-inspired glass UI, free 3D camera with yaw/pitch/roll/pan/zoom, network topology chains, LAN/Wi-Fi/BLE layers, uncertainty halos, signal history, snapshots, mDNS/Bonjour + SSDP service discovery, device classification, and permission-respecting actions (ping, Wake-on-LAN, open advertised/local web UI). No credential bypass or exploitation."
+  "notes": "v0.5.1 forced rollout of the v0.5 spatial redesign: Apple-inspired glass UI, free 3D yaw/pitch/roll/pan/zoom camera, topology chains, LAN/Wi-Fi/BLE layers, uncertainty halos, signal history, snapshots, mDNS/Bonjour + SSDP service discovery, device classification, and permission-respecting controls (ping, Wake-on-LAN, open advertised/local web UI). No credential bypass or exploitation."
 }
