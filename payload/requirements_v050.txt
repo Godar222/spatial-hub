@@ -1,0 +1,9 @@
+Flask>=3.0,<4
+waitress>=3.0,<4
+qrcode[pil]>=8.0,<9
+Pillow>=11,<13
+psutil>=6,<8
+pystray>=0.19,<1
+bleak>=1.0,<2
+pywebview>=5.4,<7
+zeroconf>=0.132,<1
