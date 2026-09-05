@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "requirements_version": "2",
   "requirements_sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff",
   "files": [
@@ -25,5 +25,5 @@
       "sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff"
     }
   ],
-  "notes": "v0.4.1 hotfix: robust Windows LAN/Wi-Fi/BLE discovery, connected-Wi-Fi fallback, visible scan diagnostics, restored phone pairing."
+  "notes": "v0.4.2 republish: forces installed clients to redownload the v0.4.1 discovery hotfix and refresh local app files."
 }
