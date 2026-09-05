@@ -1,11 +1,16 @@
 {
   "schema": 1,
-  "version": "0.5.1",
+  "version": "0.6.0",
   "requirements_version": "3",
   "requirements_sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48",
   "files": [
     {
       "path": "main.py",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/main_v060.py",
+      "sha256": "d2bddbc94b6a9b92bcacdac10bd8e2042a2f8c5bd8984956d892691904464f0e"
+    },
+    {
+      "path": "core_v050.py",
       "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/v050.py",
       "sha256": "28755479ba68c85bf44c5577cc47ff72fe3f43d3467661d7d0c21627768c5806"
     },
@@ -20,10 +25,15 @@
       "sha256": "c75a82157445e5e9daaac5ed72cc7cff874ee110241c6fbd7f38a0ac8762459f"
     },
     {
+      "path": "proximity.js",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/proximity_v060.js",
+      "sha256": "b2fbfbdaa1080ed15c5f2589e854c719eda757df5d1ad1cc325cb42573756aec"
+    },
+    {
       "path": "requirements.txt",
       "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements_v050.txt",
       "sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48"
     }
   ],
-  "notes": "v0.5.1 forced rollout of the v0.5 spatial redesign: Apple-inspired glass UI, free 3D yaw/pitch/roll/pan/zoom camera, topology chains, LAN/Wi-Fi/BLE layers, uncertainty halos, signal history, snapshots, mDNS/Bonjour + SSDP service discovery, device classification, and permission-respecting controls (ping, Wake-on-LAN, open advertised/local web UI). No credential bypass or exploitation."
+  "notes": "v0.6.0 adds a trusted-device model and permission-respecting auto-connect layer: Nearby view, persistent pairing token, automatic reconnect for previously paired Spatial Nodes, LAN reachability/service readiness for trusted devices, and explicit BLE GATT inspection only after the user trusts the device. No password bypass, forced pairing, microphone bypass, or exploitation."
 }
