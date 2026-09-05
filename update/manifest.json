@@ -1,16 +1,19 @@
 {
   "schema": 1,
-  "version": "0.3.0",
-  "requirements_version": "1",
+  "version": "0.4.0",
+  "requirements_version": "2",
+  "requirements_sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff",
   "files": [
     {
       "path": "main.py",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/main.py"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/main.py",
+      "sha256": "86f27549cf58a1fec0cc5ce5a94900fd177ae4fb872d134203f1b5f79d871188"
     },
     {
       "path": "requirements.txt",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements.txt"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements.txt",
+      "sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff"
     }
   ],
-  "notes": "Initial auto-updating Windows Spatial Hub application"
+  "notes": "Desktop v0.4.0: embedded Windows app window, automatic LAN/Wi-Fi/BLE discovery, rough radio-distance estimates, tray operation and phone-agent support."
 }
