@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "version": "0.3.0",
+  "requirements_version": "1",
+  "files": [
+    {
+      "path": "main.py",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/main.py"
+    },
+    {
+      "path": "requirements.txt",
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements.txt"
+    }
+  ],
+  "notes": "Initial auto-updating Windows Spatial Hub application"
+}
