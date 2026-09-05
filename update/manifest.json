@@ -1,18 +1,18 @@
 {
   "schema": 1,
-  "version": "0.4.2",
-  "requirements_version": "2",
-  "requirements_sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff",
+  "version": "0.5.0",
+  "requirements_version": "3",
+  "requirements_sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48",
   "files": [
     {
       "path": "main.py",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/v041.py",
-      "sha256": "68884b3fa47bb770c67b82f23a3a656da324d48cd41a88d06f4c6384ac7a6ec4"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/v050.py",
+      "sha256": "28755479ba68c85bf44c5577cc47ff72fe3f43d3467661d7d0c21627768c5806"
     },
     {
       "path": "dashboard.html",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/dashboard_v041.html",
-      "sha256": "9368da65ee71d45cc8dfd0434ab5412c62b7dc02a35bfa6197577eaa1bb16a51"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/dashboard_v050.html",
+      "sha256": "2a31813f401aaab8297b4b667234cdf6d70e642579cbc85a304387c47db73053"
     },
     {
       "path": "phone.html",
@@ -21,9 +21,9 @@
     },
     {
       "path": "requirements.txt",
-      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements.txt",
-      "sha256": "b2f33124d3df7ebcaa316bcfcb53f805e946283bbb9bde13c82ab00743e3bbff"
+      "url": "https://raw.githubusercontent.com/Godar222/spatial-hub/main/payload/requirements_v050.txt",
+      "sha256": "8406e5acb08602892b18fdc670480593d9dc292f27dc1193e289207348eeaa48"
     }
   ],
-  "notes": "v0.4.2 republish: forces installed clients to redownload the v0.4.1 discovery hotfix and refresh local app files."
+  "notes": "v0.5.0: Apple-inspired glass UI, free 3D camera with yaw/pitch/roll/pan/zoom, network topology chains, LAN/Wi-Fi/BLE layers, uncertainty halos, signal history, snapshots, mDNS/Bonjour + SSDP service discovery, device classification, and permission-respecting actions (ping, Wake-on-LAN, open advertised/local web UI). No credential bypass or exploitation."
 }
